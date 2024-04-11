@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const mintPriceUnitType = require('../config/mintPriceUnitType');
+const { mintPriceUnitType } = require('../constants');
 
 const Schema = mongoose.Schema;
 
