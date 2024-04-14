@@ -1,10 +1,6 @@
 module.exports.mongoUri =
   'mongodb+srv://Yuki:kz8ki5dI8ZUvUypD@cluster1155.mxlzijn.mongodb.net/factory-dev-db';
-module.exports.mintPriceUnitType = {
-  ETH: 0,
-  USDT: 1,
-  USDC: 2,
-};
+module.exports.mintPriceUnitType = [0, 1, 2];
 module.exports.factoryAddress =
   '0x1d5577f98450306Ba58a7D2A2277042d81F46E24'.toLocaleLowerCase();
 module.exports.blueprintAddress =
