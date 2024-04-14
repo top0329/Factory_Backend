@@ -36,7 +36,7 @@ const BlueprintSchema = new Schema(
     },
     mintPriceUnit: {
       type: Number,
-      enum: Object.keys(mintPriceUnitType),
+      enum: mintPriceUnitType,
       required: true,
     },
     mintLimit: {
@@ -45,6 +45,7 @@ const BlueprintSchema = new Schema(
     },
     mintedAmount: {
       type: Number,
+      default: 0,
       required: true,
     },
     data: {
