@@ -10,5 +10,6 @@ router.get('/', (req, res) => {
 
 router.post('/create', BlueprintController.createBlueprint);
 router.put('/update', BlueprintController.updateBlueprint);
+router.put('/mint', BlueprintController.mintBlueprint);
 
 module.exports = router;
