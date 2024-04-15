@@ -9,5 +9,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/create', BlueprintController.createBlueprint);
+router.put('/update', BlueprintController.updateBlueprint);
 
 module.exports = router;
