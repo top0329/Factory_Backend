@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const BlueprintSchema = new Schema(
   {
     id: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
     },
@@ -111,5 +111,8 @@ const BlueprintSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// BlueprintSchema.index({ id: 1 });
+// BlueprintSchema.index({ name: 'text', creator: 'text' });
 
 module.exports = mongoose.model('blueprint', BlueprintSchema);
