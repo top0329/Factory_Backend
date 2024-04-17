@@ -20,7 +20,7 @@ const searchBlueprint = async (req, res) => {
       mintedAmountMax,
     } = req.query;
     const filter = {};
-    if (maxId && minId > maxId) {
+    if (maxId && Number(minId) > Number(maxId)) {
       return res.status(400).send('Blueprint id must be less than max id');
     }
     if (minId) {
@@ -34,7 +34,7 @@ const searchBlueprint = async (req, res) => {
         $lte: maxId,
       };
     }
-    if (mintPriceMax && mintPriceMin > mintPriceMax) {
+    if (mintPriceMax && Number(mintPriceMin) > Number(mintPriceMax)) {
       return res.status(400).send('Min price must less than max price');
     }
     if (mintPriceUnit && !mintPriceUnitType.includes(Number(mintPriceUnit))) {
@@ -54,7 +54,7 @@ const searchBlueprint = async (req, res) => {
         $lte: mintPriceMax,
       };
     }
-    if (mintLimitMax && mintLimitMin > mintLimitMax) {
+    if (mintLimitMax && Number(mintLimitMin) > Number(mintLimitMax)) {
       return res
         .status(400)
         .send('Min mint limit must less than max mint limit');
@@ -70,7 +70,7 @@ const searchBlueprint = async (req, res) => {
         $lte: mintLimitMax,
       };
     }
-    if (totalSupplyMax && totalSupplyMin > totalSupplyMax) {
+    if (totalSupplyMax && Number(totalSupplyMin) > Number(totalSupplyMax)) {
       return res
         .status(400)
         .send('Min total supply must less than max total supply');
@@ -86,7 +86,7 @@ const searchBlueprint = async (req, res) => {
         $lte: totalSupplyMax,
       };
     }
-    if (mintedAmountMax && mintedAmountMin > mintedAmountMax) {
+    if (mintedAmountMax && Number(mintedAmountMin) > Number(mintedAmountMax)) {
       return res
         .status(400)
         .send('Min minted amount must less than max minted amount');
