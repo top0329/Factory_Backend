@@ -1,9 +1,9 @@
 const express = require('express');
 
+const MyBlueprintController = require('../../controllers/MyBlueprint');
+
 const router = express();
 
-router.get('/', (req, res) => {
-  res.send({ msg: 'this is myBlueprint test api' });
-});
+router.get('/', MyBlueprintController.getAllMyBlueprints);
 
 module.exports = router;

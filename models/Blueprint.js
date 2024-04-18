@@ -7,6 +7,11 @@ const Schema = mongoose.Schema;
 const BlueprintSchema = new Schema(
   {
     id: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    searchId: {
       type: String,
       required: true,
       unique: true,

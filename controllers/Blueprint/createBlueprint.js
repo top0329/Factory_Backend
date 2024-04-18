@@ -4,6 +4,7 @@ const createBlueprint = async (req, res) => {
   try {
     const data = req.body;
     const blueprint = new Blueprint(data);
+    blueprint.searchId = blueprint.id;
     const savedData = await blueprint.save();
     res.send(savedData);
   } catch (err) {

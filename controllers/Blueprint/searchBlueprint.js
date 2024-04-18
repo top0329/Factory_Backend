@@ -25,13 +25,13 @@ const searchBlueprint = async (req, res) => {
     }
     if (minId) {
       filter.id = {
-        $gte: minId,
+        $gte: Number(minId),
       };
     }
     if (maxId) {
       filter.id = {
         ...filter.id,
-        $lte: maxId,
+        $lte: Number(maxId),
       };
     }
     if (mintPriceMax && Number(mintPriceMin) > Number(mintPriceMax)) {
@@ -41,17 +41,17 @@ const searchBlueprint = async (req, res) => {
       return res.status(400).send('Invalid unit');
     }
     if ((mintPriceMax || mintPriceMin) && mintPriceUnit) {
-      filter.mintPriceUnit = mintPriceUnit;
+      filter.mintPriceUnit = Number(mintPriceUnit);
     }
     if (mintPriceMin) {
       filter.mintPrice = {
-        $gte: mintPriceMin,
+        $gte: Number(mintPriceMin),
       };
     }
     if (mintPriceMax) {
       filter.mintPrice = {
         ...filter.mintPrice,
-        $lte: mintPriceMax,
+        $lte: Number(mintPriceMax),
       };
     }
     if (mintLimitMax && Number(mintLimitMin) > Number(mintLimitMax)) {
@@ -61,13 +61,13 @@ const searchBlueprint = async (req, res) => {
     }
     if (mintLimitMin) {
       filter.mintLimit = {
-        $gte: mintLimitMin,
+        $gte: Number(mintLimitMin),
       };
     }
     if (mintLimitMax) {
       filter.mintLimit = {
         ...filter.mintLimit,
-        $lte: mintLimitMax,
+        $lte: Number(mintLimitMax),
       };
     }
     if (totalSupplyMax && Number(totalSupplyMin) > Number(totalSupplyMax)) {
@@ -77,13 +77,13 @@ const searchBlueprint = async (req, res) => {
     }
     if (totalSupplyMin) {
       filter.totalSupply = {
-        $gte: totalSupplyMin,
+        $gte: Number(totalSupplyMin),
       };
     }
     if (totalSupplyMax) {
       filter.totalSupply = {
         ...filter.totalSupply,
-        $lte: totalSupplyMax,
+        $lte: Number(totalSupplyMax),
       };
     }
     if (mintedAmountMax && Number(mintedAmountMin) > Number(mintedAmountMax)) {
@@ -93,13 +93,13 @@ const searchBlueprint = async (req, res) => {
     }
     if (mintedAmountMin) {
       filter.mintedAmount = {
-        $gte: mintedAmountMin,
+        $gte: Number(mintedAmountMin),
       };
     }
     if (mintedAmountMax) {
       filter.mintedAmount = {
         ...filter.mintedAmount,
-        $lte: mintedAmountMax,
+        $lte: Number(mintedAmountMax),
       };
     }
     const validFields = [
@@ -126,7 +126,7 @@ const searchBlueprint = async (req, res) => {
       const keywordRegex = new RegExp(keywords.join('|'), 'i');
       search = {
         $or: [
-          { id: { $regex: keywordRegex } },
+          { searchId: { $regex: keywordRegex } },
           { name: { $regex: keywordRegex } },
           { creator: { $regex: keywordRegex } },
         ],
