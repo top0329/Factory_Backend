@@ -1,9 +1,9 @@
 const express = require('express');
 
+const ProductController = require('../../controllers/Product');
+
 const router = express();
 
-router.get('/', (req, res) => {
-  res.send({ msg: 'this is product test api' });
-});
+router.get('/', ProductController.getAllProducts);
 
 module.exports = router;
