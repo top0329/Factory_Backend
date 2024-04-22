@@ -1,9 +1,10 @@
 const express = require('express');
 
+const ComponentController = require('../../controllers/Component');
+
 const router = express();
 
-router.get('/', (req, res) => {
-  res.send({ msg: 'this is component test api' });
-});
+router.get('/', ComponentController.getAllComponents);
+router.get('/search', ComponentController.searchComponent);
 
 module.exports = router;
