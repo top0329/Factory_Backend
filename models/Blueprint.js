@@ -74,6 +74,11 @@ const BlueprintSchema = new Schema(
               'https://ipfs.io/ipfs/bafybeigzqwt7uavnlrj3nq44hyoicf3jcbfxi2iih6uaguj3za5t3aqxoi',
             required: true,
           },
+          type: {
+            type: String,
+            default: 'erc20',
+            required: true,
+          }
         },
       ],
       erc721Data: [
@@ -90,6 +95,11 @@ const BlueprintSchema = new Schema(
             type: Number,
             required: true,
           },
+          type: {
+            type: String,
+            default: 'erc721',
+            required: true,
+          }
         },
       ],
       erc1155Data: [
@@ -110,6 +120,11 @@ const BlueprintSchema = new Schema(
             type: Number,
             required: true,
           },
+          type: {
+            type: String,
+            default: 'erc1155',
+            required: true,
+          }
         },
       ],
     },
