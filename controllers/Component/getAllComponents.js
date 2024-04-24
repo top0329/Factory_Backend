@@ -22,7 +22,10 @@ const getAllComponents = async (req, res) => {
             { $unwind: '$data.erc721Data' },
             {
               $group: {
-                _id: '$data.erc721Data.tokenId',
+                _id: {
+                  tokenId: '$data.erc721Data.tokenId',
+                  tokenAddress: '$data.erc721Data.tokenAddress',
+                },
                 tokenId: { $first: '$data.erc721Data.tokenId' },
                 name: { $first: '$data.erc721Data.name' },
                 tokenAddress: { $first: '$data.erc721Data.tokenAddress' },

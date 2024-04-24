@@ -3,14 +3,14 @@ const Blueprint = require('../../models/Blueprint');
 const searchComponent = async (req, res) => {
   try {
     const { query, sortField, sortOrder } = req.query;
-    // const validFields = ['name', 'type', 'usedAmount', 'recentCreated'];
-    // if (!validFields.includes(sortField)) {
-    //   res.status(400).send('Invalid sort field');
-    //   return;
-    // }
+    const validFields = ['name', 'type', 'usedAmount', 'recentCreated'];
+    if (!validFields.includes(sortField)) {
+      res.status(400).send('Invalid sort field');
+      return;
+    }
     const sortOrderNum = sortOrder === 'asc' ? 1 : -1;
     const sort = {
-      [sortField]: sortOrderNum,
+      [`componentsData.${sortField}`]: sortOrderNum,
     };
     let search = {};
     let keywordRegex = '';
@@ -21,30 +21,12 @@ const searchComponent = async (req, res) => {
       keywordRegex = new RegExp(keywords.join('|'), 'i');
       search = {
         $or: [
-          { name: { $regex: keywordRegex } },
-          { type: { $regex: keywordRegex } },
+          { 'componentsData.name': { $regex: keywordRegex } },
+          { 'componentsData.type': { $regex: keywordRegex } },
         ],
       };
     }
     const results = await Blueprint.aggregate([
-      {
-        $match: {
-          $or: [
-            {
-              'data.erc20Data.name': keywordRegex,
-            },
-            { 'data.erc20Data.type': keywordRegex },
-            {
-              'data.erc721Data.name': keywordRegex,
-            },
-            { 'data.erc721Data.type': keywordRegex },
-            {
-              'data.erc1155Data.name': keywordRegex,
-            },
-            { 'data.erc1155Data.type': keywordRegex },
-          ],
-        },
-      },
       {
         $facet: {
           erc20Data: [
@@ -64,7 +46,10 @@ const searchComponent = async (req, res) => {
             { $unwind: '$data.erc721Data' },
             {
               $group: {
-                _id: '$data.erc721Data.tokenId',
+                _id: {
+                  tokenId: '$data.erc721Data.tokenId',
+                  tokenAddress: '$data.erc721Data.tokenAddress',
+                },
                 tokenId: { $first: '$data.erc721Data.tokenId' },
                 name: { $first: '$data.erc721Data.name' },
                 tokenAddress: { $first: '$data.erc721Data.tokenAddress' },
@@ -97,8 +82,33 @@ const searchComponent = async (req, res) => {
           },
         },
       },
+      {
+        $unwind: '$componentsData',
+      },
+      {
+        $match: search,
+      },
+      {
+        $sort: sort,
+      },
+      {
+        $group: {
+          _id: null,
+          components: { $push: '$componentsData' },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          components: 1,
+        },
+      },
     ]);
-    res.status(200).send(results[0].componentsData);
+    if (results.length === 0) {
+      res.send([]);
+      return;
+    }
+    res.status(200).send(results[0].components);
   } catch (err) {
     console.log(err);
     res.status(500).send({ msg: 'Internal server error' });
