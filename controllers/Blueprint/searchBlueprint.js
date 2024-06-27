@@ -5,6 +5,7 @@ const searchBlueprint = async (req, res) => {
   try {
     const {
       query,
+      chainId,
       sortField,
       sortOrder,
       minId,
@@ -118,7 +119,7 @@ const searchBlueprint = async (req, res) => {
     const sort = {
       [sortField]: sortOrderNum,
     };
-    let search = {};
+    let search = { chainId: chainId };
     let normalized = query.replace(/[^a-zA-Z0-9\s]/g, ' ');
     let words = normalized.split(/\s+/);
     let keywords = words.filter((word) => word.length > 0);

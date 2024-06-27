@@ -9,12 +9,14 @@ const BlueprintSchema = new Schema(
     id: {
       type: Number,
       required: true,
-      unique: true,
+    },
+    chainId: {
+      type: Number,
+      required: true,
     },
     searchId: {
       type: String,
       required: true,
-      unique: true,
     },
     name: {
       type: String,

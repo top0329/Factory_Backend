@@ -2,8 +2,8 @@ const Blueprint = require('../../models/Blueprint');
 
 const mintBlueprint = async (req, res) => {
   try {
-    const { id, mintedAmount } = req.body;
-    const blueprint = await Blueprint.findOne({ id: id });
+    const { id, chainId, mintedAmount } = req.body;
+    const blueprint = await Blueprint.findOne({ id: id, chainId: chainId });
     if (blueprint) {
       blueprint.mintedAmount += mintedAmount;
       await blueprint.save();

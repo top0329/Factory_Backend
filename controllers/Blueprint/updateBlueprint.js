@@ -5,7 +5,7 @@ const updateBlueprint = async (req, res) => {
     const data = req.body;
     console.log(data);
     const updatedBlueprintData = await Blueprint.findOneAndUpdate(
-      { id: data.id },
+      { id: data.id, chainId: data.chainId },
       data,
       { new: true }
     );
