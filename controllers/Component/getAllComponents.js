@@ -2,7 +2,12 @@ const Blueprint = require('../../models/Blueprint');
 
 const getAllComponents = async (req, res) => {
   try {
+    const chainId = req.query.chainId;
+
     const results = await Blueprint.aggregate([
+      {
+        $match: { chainId: parseInt(chainId) },
+      },
       {
         $facet: {
           erc20Data: [

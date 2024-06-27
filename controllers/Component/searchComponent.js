@@ -2,7 +2,7 @@ const Blueprint = require('../../models/Blueprint');
 
 const searchComponent = async (req, res) => {
   try {
-    const { query, sortField, sortOrder } = req.query;
+    const { query, chainId, sortField, sortOrder } = req.query;
     const validFields = ['name', 'type', 'usedAmount', 'recentCreated'];
     if (!validFields.includes(sortField)) {
       res.status(400).send('Invalid sort field');
@@ -27,6 +27,9 @@ const searchComponent = async (req, res) => {
       };
     }
     const results = await Blueprint.aggregate([
+      {
+        $match: { chainId: parseInt(chainId) }, // Add this stage to filter by chainId
+      },
       {
         $facet: {
           erc20Data: [
